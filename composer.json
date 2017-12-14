@@ -22,7 +22,6 @@
         "twig/extensions": "~1.3"
     },
     "autoload": {
-        "psr-4": { "Fybcode\\Bundle\\DfpBundle": "" }
-    },
-    "target-dir": "Fybcode/Bundle/DfpBundle"
+        "psr-4": { "Fybcode\\DfpBundle": "" }
+    }
 }
