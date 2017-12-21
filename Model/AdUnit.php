@@ -1,125 +1,85 @@
 <?php
-/**
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
-namespace Nodrew\Bundle\DfpBundle\Model;
+namespace Fybcode\DfpBundle\Model;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @package     NodrewDfpBundle
- * @author      Drew Butler <hi@dbtlr.com>
- * @copyright   (c) 2012 Drew Butler
- * @license     http://www.opensource.org/licenses/mit-license.php
+ * @package     FybcodeDfpBundle
+ * @author      Francis Bilodeau <fbilodeau@dessinsdrummond.com>
+ * @copyright   (c) 2017 Francis Bilodeau
  */
-class AdUnit extends TargetContainer
+
+class AdUnit
 {
+    protected $em;
     protected $path;
     protected $sizes;
     protected $divId;
-    protected $targets = array();
+    protected $request;
 
     /**
      * @param string $path
+     * @param string $divId
      * @param array|null $sizes
-     * @param array $targets
+     * @param Request $request
      */
-    public function __construct($path, $sizes=null, array $targets = array())
+    public function __construct($path, $divId, $sizes=null, Request $request)
     {
         $this->setPath($path);
+        $this->setDivId($divId);
         $this->setSizes($sizes);
-        $this->setTargets($targets);
-
-        $this->buildDivId();
-    }
-
-    /**
-     * Build the divId.
-     */
-    public function buildDivId()
-    {
-        $this->divId = 'dfp-'.spl_object_hash($this);
+        $this->request = $request;
     }
 
     /**
      * Output the DFP code for this ad unit
      *
-     * @param Nodrew\Bundle\DfpBundle\Model\Settings $settings
+     * @param Fybcode\DfpBundle\Model\Settings $settings
      * @return string
      */
     public function output(Settings $settings)
     {
         $class  = $settings->getDivClass();
-        $style  = $this->getStyles();
-        
-        return <<< RETURN
-
-<div id="{$this->divId}" class="{$class}" style="$style">
+        $output = <<< RETURN
+<div id="{$this->divId}" class="{$class}">
 <script type="text/javascript">
 googletag.cmd.push(function() { googletag.display('{$this->divId}'); });
 </script>
 </div>
 RETURN;
+
+        if (($this->divId == 'div-gpt-ad-1433191931212-1') || ($this->divId == 'div-gpt-ad-1433191931212-5')) {
+            $rand = rand(1,2);
+            if (($rand == 1) || ($rand == 2)) {
+                /* Todo: For english website, validate getLocation */
+                // Validate time.
+                date_default_timezone_set('America/New_York');
+                $hours_period = ((date('H') <= 8) || (date('H') >= 8)) ? true : false;
+                if ((date('N', strtotime(date("Y-m-d H:i:s"))) >= 6) || ($hours_period)) {
+                    // Validate Ip.
+                    if ($this->request->getClientIp() != '173.237.240.50') {
+                        // Validate browser.
+                        if ($this->get_browser_name($this->request->headers->get('User-Agent')) != 'Other') {
+                            $height = ($this->divId == 'div-gpt-ad-1433191931212-1') ? '250' : '600';
+                            $output = <<< RETURN
+<style>.banner-responsive { width: 300px; height: {$height}px; } @media(max-width: 580px) { .banner-responsive { width: 320px; height: 100px; }}</style>                
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle banner-responsive" style="display:inline-block" data-ad-client="ca-pub-6283873300935465" data-ad-slot="6186379498"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+RETURN;
+                        }
+                    }
+                }
+            }
+        }
+
+        return $output;
     }
     
-    protected function getStyles()
-    {
-        if ($this->getSizes() == null) {
-            return 'width: 0; height: 0; position: absolute; bottom: 0;';
-        }
-        
-        $width  = $this->getLargestWidth();
-        $height = $this->getLargestHeight();
-        
-        return "width:{$width}px; height:{$height}px;"; 
-    }
-
-    /**
-     * Get the largest width in the sizes.
-     *
-     * @return int
-     */
-    public function getLargestWidth()
-    {
-        if ($this->sizes === null) {
-            return 0;
-        }
-
-        $largest = 0;
-        foreach ($this->sizes as $size) {
-            if ($size[0] > $largest) {
-                $largest = $size[0];
-            }
-        }
-
-        return $largest;
-    }
-
-    /**
-     * Get the largest height in the sizes.
-     *
-     * @return int
-     */
-    public function getLargestHeight()
-    {
-        if ($this->sizes === null) {
-            return 0;
-        }
-
-        $largest = 0;
-        foreach ($this->sizes as $size) {
-            if ($size[1] > $largest) {
-                $largest = $size[1];
-            }
-        }
-
-        return $largest;
-    }
-
     /**
      * Fix the given sizes, if possible, so that they will match the internal array needs.
      *
-     * @throws Nodrew\Bundle\DfpBundle\Model\AdSizeException
+     * @throws Fybcode\DfpBundle\Model\AdSizeException
      * @param array|null$sizes
      * @return array|null
      */
@@ -159,6 +119,21 @@ RETURN;
     }
 
     /**
+     * Validate the name of the browser, used to not show ads for robots.
+     */
+    protected function get_browser_name($user_agent) {
+        if (strpos($user_agent, 'Opera') || strpos($user_agent, 'OPR/')) return 'Opera';
+        elseif (strpos($user_agent, 'Edge')) return 'Edge';
+        elseif (strpos($user_agent, 'Chrome')) return 'Chrome';
+        elseif (strpos($user_agent, 'Safari')) return 'Safari';
+        elseif (strpos($user_agent, 'Firefox')) return 'Firefox';
+        elseif (strpos($user_agent, 'Android')) return 'Android';
+        elseif (strpos($user_agent, 'MSIE') || strpos($user_agent, 'Trident/7')) return 'Internet Explorer';
+
+        return 'Other';
+    }
+
+    /**
      * Get the path.
      *
      * @param string $path
@@ -181,7 +156,7 @@ RETURN;
     /**
      * Get the sizes.
      *
-     * @throws Nodrew\Bundle\DfpBundle\Model\AdSizeException
+     * @throws Fybcode\DfpBundle\Model\AdSizeException
      * @param array $sizes
      */
     public function setSizes($sizes)

@@ -1,18 +1,14 @@
 <?php
-/**
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
-namespace Nodrew\Bundle\DfpBundle\Model;
+namespace Fybcode\DfpBundle\Model;
 
 /**
- * @package     NodrewDfpBundle
- * @author      Drew Butler <hi@dbtlr.com>
- * @copyright   (c) 2012 Drew Butler
- * @license     http://www.opensource.org/licenses/mit-license.php
+ * @package     FybcodeDfpBundle
+ * @author      Francis Bilodeau <fbilodeau@dessinsdrummond.com>
+ * @copyright   (c) 2017 Francis Bilodeau
  */
-class Settings extends TargetContainer
+
+class Settings
 {
     protected $publisherId;
     protected $divClass;
@@ -20,13 +16,11 @@ class Settings extends TargetContainer
     /**
      * @param int $publisherId
      * @param int $divClass
-     * @param array $targets
      */
-    public function __construct($publisherId, $divClass, array $targets = array())
+    public function __construct($publisherId, $divClass)
     {
         $this->setPublisherId($publisherId);
         $this->setDivClass($divClass);
-        $this->setTargets($targets);
     }
 
     /**

@@ -1,10 +1,11 @@
 <?php
 
-namespace Nodrew\Bundle\DfpBundle\Twig\Extension;
+namespace Fybcode\DfpBundle\Twig\Extension;
 
-use Nodrew\Bundle\DfpBundle\Model\AdUnit,
-    Nodrew\Bundle\DfpBundle\Model\Settings,
-    Nodrew\Bundle\DfpBundle\Model\Collection;
+use Fybcode\DfpBundle\Model\AdUnit;
+use Fybcode\DfpBundle\Model\Settings;
+use Fybcode\DfpBundle\Model\Collection;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class DfpExtension extends \Twig_Extension
 {
@@ -12,11 +13,13 @@ class DfpExtension extends \Twig_Extension
     protected $collection;
 
     /**
-     * @param Nodrew\Bundle\DfpBundle\Model\Settings $settings
-     * @param Nodrew\Bundle\DfpBundle\Model\Collection $collection
+     * @param Symfony\Component\HttpFoundation\RequestStack $requestStack
+     * @param Fybcode\DfpBundle\Model\Settings $settings
+     * @param Fybcode\DfpBundle\Model\Collection $collection
      */
-    public function __construct(Settings $settings, Collection $collection)
+    public function __construct(RequestStack $requestStack, Settings $settings, Collection $collection)
     {
+        $this->requestStack = $requestStack;
         $this->settings   = $settings;
         $this->collection = $collection;
     }
@@ -37,14 +40,12 @@ class DfpExtension extends \Twig_Extension
     /**
      * Create an ad unit and return the source
      *
-     * @param string $path
-     * @param array $sizes
-     * @param array $targets
+     * @param array $adUnit
      * @return string
      */
-    public function addAdUnit($path, array $sizes, array $targets = array())
+    public function addAdUnit(array $adUnit)
     {
-        $unit = new AdUnit($path, $sizes, $targets);
+        $unit = new AdUnit($adUnit['code'], $adUnit['id'], $adUnit['size'], $this->requestStack->getCurrentRequest());
 
         $this->collection->add($unit);
         
@@ -54,13 +55,12 @@ class DfpExtension extends \Twig_Extension
     /**
      * Create an out of page ad unit and return the source
      *
-     * @param string $path
-     * @param array $targets
+     * @param array $adUnit
      * @return string
      */
-    public function addOutOfPageAdUnit($path, array $targets = array())
+    public function addOutOfPageAdUnit(array $adUnit)
     {
-        $unit = new AdUnit($path, null, $targets);
+        $unit = new AdUnit($adUnit['code'], $adUnit['id'], null);
 
         $this->collection->add($unit);
         
@@ -72,6 +72,6 @@ class DfpExtension extends \Twig_Extension
      */
     public function getName()
     {
-        return 'nodrew_dfp';
+        return 'fybcode_dfp';
     }
 }

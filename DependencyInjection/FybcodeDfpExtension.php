@@ -1,18 +1,12 @@
 <?php
-/**
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
-namespace Nodrew\Bundle\DfpBundle\DependencyInjection;
+namespace Fybcode\DfpBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
-use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 
 /**
@@ -20,12 +14,11 @@ use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  *
- * @package     NodrewDfpBundle
- * @author      Drew Butler <hi@dbtlr.com>
- * @copyright   (c) 2012 Drew Butler
- * @license     http://www.opensource.org/licenses/mit-license.php
+ * @package     FybcodeDfpBundle
+ * @author      Francis Bilodeau <fbilodeau@dessinsdrummond.com>
+ * @copyright   (c) 2017 Francis Bilodeau
  */
-class NodrewDfpExtension extends Extension
+class FybcodeDfpExtension extends Extension
 {
     /**
      * {@inheritDoc}
@@ -51,18 +44,9 @@ class NodrewDfpExtension extends Extension
      */
     protected function setConfig($config, $container)
     {
-        foreach (array('publisher_id', 'targets', 'div_class') as $attribute) {
+        foreach (array('publisher_id', 'div_class') as $attribute) {
             if (isset($config[$attribute])) {
-                if ($attribute == 'targets') {
-                    if (!is_array($config[$attribute])) {
-                        $ex = new InvalidConfigurationException('Configuration for nodrew_dfp.targets must be an array.');
-                        $ex->setPath('nodrew_dfp.targets');
-
-                        throw $ex;
-                    }
-                }
-
-                $container->setParameter('nodrew.dfp.'.$attribute, $config[$attribute]);
+                $container->setParameter('fybcode.dfp.'.$attribute, $config[$attribute]);
             }
         }
     }
@@ -80,6 +64,6 @@ class NodrewDfpExtension extends Extension
      */
     public function getNamespace()
     {
-        return 'http://www.dbtlr.com/schema/dic/dfp_bundle';
+        return 'http://www.fybcode.com';
     }
 }

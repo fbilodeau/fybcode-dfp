@@ -1,6 +1,6 @@
 <?php
 
-namespace Fybcode\Bundle\DfpBundle;
+namespace Fybcode\DfpBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

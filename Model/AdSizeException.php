@@ -1,6 +1,6 @@
 <?php
 
-namespace Nodrew\Bundle\DfpBundle\Model;
+namespace Fybcode\DfpBundle\Model;
 
 class AdSizeException extends \LogicException
 {

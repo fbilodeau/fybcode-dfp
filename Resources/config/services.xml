@@ -5,34 +5,34 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="nodrew.dfp.publisher_id"></parameter>
-        <parameter key="nodrew.dfp.div_class"></parameter>
-        <parameter key="nodrew.dfp.targets"  type="collection"></parameter>
-        <parameter key="nodrew.dfp.control.listener.class">Nodrew\Bundle\DfpBundle\EventListener\ControlCodeListener</parameter>
-        <parameter key="nodrew.dfp.collection.class">Nodrew\Bundle\DfpBundle\Model\Collection</parameter>
-        <parameter key="nodrew.dfp.settings.class">Nodrew\Bundle\DfpBundle\Model\Settings</parameter>
-        <parameter key="nodrew.dfp.twig.extension.class">Nodrew\Bundle\DfpBundle\Twig\Extension\DfpExtension</parameter>
+        <parameter key="fybcode.dfp.publisher_id"></parameter>
+        <parameter key="fybcode.dfp.div_class"></parameter>
+        <parameter key="fybcode.dfp.control.listener.class">Fybcode\DfpBundle\EventListener\ControlCodeListener</parameter>
+        <parameter key="fybcode.dfp.collection.class">Fybcode\DfpBundle\Model\Collection</parameter>
+        <parameter key="fybcode.dfp.settings.class">Fybcode\DfpBundle\Model\Settings</parameter>
+        <parameter key="fybcode.dfp.twig.extension.class">Fybcode\DfpBundle\Twig\Extension\DfpExtension</parameter>
     </parameters>
 
     <services>
-        <service id="nodrew.dfp.collection" class="%nodrew.dfp.collection.class%" />
+        <service id="fybcode.dfp.collection" class="%fybcode.dfp.collection.class%" />
 
-        <service id="nodrew.dfp.settings" class="%nodrew.dfp.settings.class%">
-            <argument>%nodrew.dfp.publisher_id%</argument>
-            <argument>%nodrew.dfp.div_class%</argument>
-            <argument>%nodrew.dfp.targets%</argument>
+        <service id="fybcode.dfp.settings" class="%fybcode.dfp.settings.class%">
+            <argument>%fybcode.dfp.publisher_id%</argument>
+            <argument>%fybcode.dfp.div_class%</argument>
         </service>
 
-        <service id="nodrew.dfp.control.listener" class="%nodrew.dfp.control.listener.class%">
+        <service id="fybcode.dfp.control.listener" class="%fybcode.dfp.control.listener.class%">
             <tag name="kernel.event_listener" event="kernel.response" method="onKernelResponse" />
-            <argument type="service" id="nodrew.dfp.collection" />
-            <argument type="service" id="nodrew.dfp.settings" />
+            <argument type="service" id="fybcode.dfp.collection" />
+            <argument type="service" id="fybcode.dfp.settings" />
+            <argument type="service" id="request_stack" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
         
-
-        <service id="nodrew.dfp.twig.extension" class="%nodrew.dfp.twig.extension.class%">
-            <argument type="service" id="nodrew.dfp.settings" />
-            <argument type="service" id="nodrew.dfp.collection" />
+        <service id="fybcode.dfp.twig.extension" class="%fybcode.dfp.twig.extension.class%">
+            <argument type="service" id="request_stack" />
+            <argument type="service" id="fybcode.dfp.settings" />
+            <argument type="service" id="fybcode.dfp.collection" />
             <tag name="twig.extension" />
         </service>
     </services>

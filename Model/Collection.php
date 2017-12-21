@@ -1,10 +1,6 @@
 <?php
-/**
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
-namespace Nodrew\Bundle\DfpBundle\Model;
+namespace Fybcode\DfpBundle\Model;
 
 use Countable, IteratorAggregate, ArrayAccess, Closure, ArrayIterator;
 
@@ -27,14 +23,14 @@ use Countable, IteratorAggregate, ArrayAccess, Closure, ArrayIterator;
  * position unless you explicitly positioned it before. Prefer iteration with
  * external iterators.
  *
- * @package     NodrewDfpBundle
+ * @package     FybcodeDfpBundle
  * @author      Guilherme Blanco <guilhermeblanco@hotmail.com>
  * @author      Jonathan Wage <jonwage@gmail.com>
  * @author      Roman Borschel <roman@code-factory.org>
- * @author      Drew Butler <hi@dbtlr.com>
- * @copyright   (c) 2012 Drew Butler
- * @license     http://www.opensource.org/licenses/mit-license.php
+ * @author      Francis Bilodeau <fbilodeau@dessinsdrummond.com>
+ * @copyright   (c) 2017 Francis Bilodeau
  */
+
 class Collection implements Countable, IteratorAggregate, ArrayAccess
 {
     /**

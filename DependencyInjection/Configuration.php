@@ -1,20 +1,15 @@
 <?php
-/**
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
-namespace Nodrew\Bundle\DfpBundle\DependencyInjection;
+namespace Fybcode\DfpBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 /**
  * This is the class that validates and merges configuration from your app/config files
  *
- * @package     NodrewDfpBundle
- * @author      Drew Butler <hi@dbtlr.com>
- * @copyright   (c) 2012 Drew Butler
- * @license     http://www.opensource.org/licenses/mit-license.php
+ * @package     FybcodeDfpBundle
+ * @author      Francis Bilodeau <fbilodeau@dessinsdrummond.com>
+ * @copyright   (c) 2017 Francis Bilodeau
  */
 class Configuration
 {
@@ -24,13 +19,12 @@ class Configuration
     public function getConfigTree()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('nodrew_dfp', 'array');
+        $rootNode = $treeBuilder->root('fybcode_dfp', 'array');
 
         $rootNode
             ->children()
                 ->scalarNode('publisher_id')->isRequired()->cannotBeEmpty()->end()
                 ->scalarNode('div_class')->defaultValue('dfp-ad-unit')->end()
-                ->variableNode('targets')->end()
             ->end()
         ;
 
