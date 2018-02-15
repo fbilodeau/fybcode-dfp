@@ -109,15 +109,19 @@ CONTROL;
      */
     protected function getAdControlBlock(AdUnit $unit)
     {
-        $publisherId = trim($this->settings->getPublisherId(), '/');
-        $sizes       = $this->printSizes($unit->getSizes());
-        $divId       = $unit->getDivId();
-        $path        = $unit->getPath();
+        $publisherId  = trim($this->settings->getPublisherId(), '/');
+        $desktopSizes = $this->printDesktopSizes($unit->getSizes());
+        $mobileSizes  = $this->printMobileSizes($unit->getSizes());
+        $divId        = $unit->getDivId();
+        $path         = $unit->getPath();
 
         return <<< BLOCK
 <script type="text/javascript">
 googletag.cmd.push(function() {
-googletag.defineSlot('/{$publisherId}/{$path}', {$sizes}, '{$divId}').addService(googletag.pubads());
+      var mapping = googletag.sizeMapping().
+      addSize([0, 0], {$mobileSizes}).
+      addSize([1050, 200], {$desktopSizes}).build();   
+googletag.defineSlot('/{$publisherId}/{$path}', {$desktopSizes}, '{$divId}').defineSizeMapping(mapping).addService(googletag.pubads());
 googletag.pubads().enableSingleRequest();
 googletag.enableServices();
 });
@@ -153,7 +157,7 @@ BLOCK;
      * @param array $sizes
      * @return string
      */
-    protected function printSizes(array $sizes)
+    protected function printDesktopSizes(array $sizes)
     {
         if (count($sizes) == 1) {
             return '['.$sizes[0][0].', '.$sizes[0][1].']';
@@ -164,6 +168,27 @@ BLOCK;
             $string .= '['.$size[0].', '.$size[1].'], ';
         }
         
+        return '['.trim($string, ', ').']';
+    }
+
+    /**
+     * Print the sizes array in it's json equivalent.
+     *
+     * @param array $sizes
+     * @return string
+     */
+    protected function printMobileSizes(array $sizes)
+    {
+        // This function is to check what is the allowed size for the ads. We will only allow mobile friendly ads.
+        $string = '';
+        if (count($sizes)) {
+            foreach ($sizes as $size) {
+                if (($size[0] <= '320') && ($size[1] <= '250')) {
+                    $string .= '[' . $size[0] . ', ' . $size[1] . '], ';
+                }
+            }
+        }
+
         return '['.trim($string, ', ').']';
     }
 
