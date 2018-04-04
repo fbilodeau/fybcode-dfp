@@ -159,15 +159,16 @@ BLOCK;
      */
     protected function printDesktopSizes(array $sizes)
     {
-        if (count($sizes) == 1) {
-            return '['.$sizes[0][0].', '.$sizes[0][1].']';
+        // This function is to check what is the allowed size for the ads. We will only allow desktop friendly ads.
+        $string = '';
+        if (count($sizes)) {
+            foreach ($sizes as $size) {
+                if ((($size[0] != '320') && ($size[1] != '50')) && (($size[0] != '300') && ($size[1] != '100'))) {
+                    $string .= '[' . $size[0] . ', ' . $size[1] . '], ';
+                }
+            }
         }
 
-        $string = '';
-        foreach ($sizes as $size) {
-            $string .= '['.$size[0].', '.$size[1].'], ';
-        }
-        
         return '['.trim($string, ', ').']';
     }
 
