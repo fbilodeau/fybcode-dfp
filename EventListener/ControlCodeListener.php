@@ -163,7 +163,7 @@ BLOCK;
         $string = '';
         if (count($sizes)) {
             foreach ($sizes as $size) {
-                if ((($size[0] != '320') && ($size[1] != '50')) && (($size[0] != '300') && ($size[1] != '100'))) {
+                if (($size[1] != '50') && ($size[1] != '100')) {
                     $string .= '[' . $size[0] . ', ' . $size[1] . '], ';
                 }
             }
