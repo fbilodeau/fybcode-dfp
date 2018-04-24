@@ -241,8 +241,8 @@ BLOCK;
                 break;
             case 'fiche':
                 $targets[] = array('sections' => 'detail');
-                if (isset($params['id'])) {
-                    $plan = $this->em->getRepository('AppBundle:Plan')->getPlanById($params['id']);
+                if (isset($params['slug'])) {
+                    $plan = $this->em->getRepository('AppBundle:Plan')->getPlanByPlanUrl($params['slug']);
                     if ($plan) {
                         // Plan Type.
                         if ($plan->getPlanType()->getId()) {
