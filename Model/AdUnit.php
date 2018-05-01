@@ -52,6 +52,10 @@ RETURN;
             $rand = rand(1,2);
             if (($rand == 1) || ($rand == 2)) {
                 /* Todo: For english website, validate getLocation */
+                // We want 1 chance on 2 for sidebar_2.
+                if (($this->divId == 'div-gpt-ad-1433191931212-5') && ($rand == 1)) {
+                    return $output;
+                }
                 // Validate time.
                 date_default_timezone_set('America/New_York');
                 $hours_period = ((date('H') <= 8) || (date('H') >= 8)) ? true : false;
