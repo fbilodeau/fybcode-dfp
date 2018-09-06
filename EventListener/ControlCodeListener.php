@@ -93,8 +93,9 @@ class ControlCodeListener
      */
     protected function getMainControlCode()
     {
+        // <script async='async' src='https://www.googletagservices.com/tag/js/gpt.js'></script>
         return <<< CONTROL
-<script async='async' src='https://www.googletagservices.com/tag/js/gpt.js'></script>
+<script async src='//rdc.m32.media/m32hb_gpt.min.js'></script>
 <script>
   var googletag = googletag || {};
   googletag.cmd = googletag.cmd || [];
