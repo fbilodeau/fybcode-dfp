@@ -100,6 +100,8 @@ class ControlCodeListener
   var googletag = googletag || {};
   googletag.cmd = googletag.cmd || [];
 </script>
+<script> try { window._FskKeyValues = %%PATTERN:TARGETINGMAP%%; } catch(e) {} </script>
+<script src="https://static.freeskreen.com/ba/178/freeskreen.min.js"></script>
 CONTROL;
     }
     
