@@ -27,14 +27,23 @@ class AdsController extends Controller
     public function txtAction()
     {
         $txtFile = $output = <<< RETURN
+appnexus.com, 2437, RESELLER, f5ab79cb980f11d1
+
+google.com, pub-1847030151454431, RESELLER, f08c47fec0942fa0
 google.com, pub-9685734445476814, DIRECT, f08c47fec0942fa0
+google.com, pub-6873606674919521, DIRECT, f08c47fec0942fa0
 google.com, pub-0037126603126973, DIRECT, f08c47fec0942fa0
 
-districtm.io, 100157, DIRECT
-appnexus.com, 7944, RESELLER
-appnexus.com, 1908, RESELLER
-adtech.com, 10266, RESELLER
-aol.com, 10266, RESELLER
+freeskreen.com, 178, DIRECT, fe119a6acfd19070
+slimcut.media, 178, DIRECT, fe119a6acfd19070
+indexexchange.com, 184088, RESELLER
+
+indexexchange.com, 184884, RESELLER, 50b1c356f2c5c8fc
+
+districtm.io, 101151, DIRECT
+appnexus.com, 1908, RESELLER, f5ab79cb980f11d1
+
+adtech.com, 10895, RESELLER
 
 RETURN;
 
