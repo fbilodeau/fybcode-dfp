@@ -48,35 +48,6 @@ googletag.cmd.push(function() { googletag.display('{$this->divId}'); });
 </div>
 RETURN;
 
-        if (($this->divId == 'div-gpt-ad-1433191931212-1') || ($this->divId == 'div-gpt-ad-1433191931212-5')) {
-            $rand = rand(1,2);
-            if (($rand == 1) || ($rand == 2)) {
-                /* Todo: For english website, validate getLocation */
-                // We want 1 chance on 2 for sidebar_2.
-                if (($this->divId == 'div-gpt-ad-1433191931212-5') && ($rand == 1)) {
-                    return $output;
-                }
-                // Validate time.
-                date_default_timezone_set('America/New_York');
-                $hours_period = ((date('H') <= 8) || (date('H') >= 8)) ? true : false;
-                if ((date('N', strtotime(date("Y-m-d H:i:s"))) >= 6) || ($hours_period)) {
-                    // Validate Ip.
-                    if ($this->request->getClientIp() != '173.237.240.50') {
-                        // Validate browser.
-                        if ($this->get_browser_name($this->request->headers->get('User-Agent')) != 'Other') {
-                            $height = ($this->divId == 'div-gpt-ad-1433191931212-1') ? '250' : '600';
-                            $output = <<< RETURN
-<style>.banner-responsive { width: 300px; height: {$height}px; } @media(max-width: 580px) { .banner-responsive { width: 320px; height: 100px; }}</style>                
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle banner-responsive" style="display:inline-block" data-ad-client="ca-pub-6283873300935465" data-ad-slot="6186379498"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-RETURN;
-                        }
-                    }
-                }
-            }
-        }
-
         return $output;
     }
     
