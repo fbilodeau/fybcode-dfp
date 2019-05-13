@@ -2,6 +2,7 @@
 
 namespace Fybcode\DfpBundle\Model;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * @package     FybcodeDfpBundle
@@ -23,12 +24,14 @@ class AdUnit
      * @param array|null $sizes
      * @param Request $request
      */
-    public function __construct($path, $divId, $sizes=null, Request $request)
+    public function __construct($path, $divId, $sizes=null, Request $request, $userId, $mapping=null)
     {
         $this->setPath($path);
         $this->setDivId($divId);
         $this->setSizes($sizes);
         $this->request = $request;
+        $this->userId = $userId;
+        $this->setMapping($mapping);
     }
 
     /**
@@ -39,14 +42,45 @@ class AdUnit
      */
     public function output(Settings $settings)
     {
-        $class  = $settings->getDivClass();
-        $output = <<< RETURN
-<div id="{$this->divId}" class="{$class}">
-<script type="text/javascript">
-googletag.cmd.push(function() { googletag.display('{$this->divId}'); });
-</script>
-</div>
+
+        //if ($this->request->getClientIp() != '173.237.240.50') {
+
+            $class = $settings->getDivClass();
+            $output = <<< RETURN
+    <div id="{$this->divId}" class="{$class}">
+    <script type="text/javascript">
+    googletag.cmd.push(function() { googletag.display('{$this->divId}'); });
+    </script>
+    </div>
 RETURN;
+
+            if (($this->divId == 'div-gpt-ad-1433191931212-1') || ($this->divId == 'div-gpt-ad-1433191931212-5')) {
+                $rand = rand(1, 2);
+                if (($rand == 1) || ($rand == 2)) {
+                    /* Todo: For english website, validate getLocation */
+                    // Validate time.
+                    date_default_timezone_set('America/New_York');
+                    $hours_period = ((date('H') <= 8) || (date('H') >= 18)) ? true : false;
+                    if ((date('N', strtotime(date("Y-m-d H:i:s"))) >= 6) || ($hours_period)) {
+                        // Validate User.
+                        if (($this->userId != "7276") && ($this->userId != "22021") && ($this->userId != "50400") && ($this->userId != "2790") && ($this->userId != "7275") &&
+                            ($this->userId != "15415") && ($this->userId != "15621")) {
+
+                            // Validate browser.
+                            if ($this->get_browser_name($this->request->headers->get('User-Agent')) != 'Other') {
+                                $height = ($this->divId == 'div-gpt-ad-1433191931212-1') ? '250' : '600';
+                                $output = <<< RETURN
+    <style>.banner-responsive { width: 300px; height: {$height}px; } @media(max-width: 580px) { .banner-responsive { width: 320px; height: 100px; }}</style>                
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle banner-responsive" style="display:inline-block" data-ad-client="ca-pub-6283873300935465" data-ad-slot="6186379498"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+RETURN;
+                            }
+                        }
+                    }
+                }
+            }
+        //}
 
         return $output;
     }
@@ -167,5 +201,27 @@ RETURN;
     public function getDivId()
     {
         return $this->divId;
+    }
+
+    /**
+     * Get the mapping.
+     *
+     * @param string $mapping
+     */
+    public function setMapping($mapping)
+    {
+        $this->mapping = ($mapping)
+                            ? ".defineSizeMapping(". $mapping. ")"
+                            : null;
+    }
+
+    /**
+     * Get the mapping.
+     *
+     * @return string
+     */
+    public function getMapping()
+    {
+        return $this->mapping;
     }
 }
