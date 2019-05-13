@@ -33,6 +33,8 @@
             <argument type="service" id="request_stack" />
             <argument type="service" id="fybcode.dfp.settings" />
             <argument type="service" id="fybcode.dfp.collection" />
+            <argument type="service" id="security.token_storage" />
+            <argument type="service" id="security.authorization_checker" />
             <tag name="twig.extension" />
         </service>
     </services>
