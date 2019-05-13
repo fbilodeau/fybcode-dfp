@@ -71,14 +71,16 @@ class ControlCodeListener
 
         $controlCode = '';
         if (count($this->collection) > 0) {
+            // Set pub headers.
             $controlCode .= $this->getMainControlCode();
+            // Set each ads used in page.
+            foreach ($this->collection as $unit) {
+                $controlCode .= $this->getAdControlBlock($unit);
+            }
+            // Close ads.
+            $controlCode .= $this->getCloseMainControlCode();
 
             $controlCode .= $this->setTargeting($this->requestStack->getCurrentRequest()->get('_route'), $this->requestStack->getCurrentRequest()->get('_route_params'));
-
-            foreach ($this->collection as $unit) {
-                $controlCode .= $unit->getSizes() === null ? $this->getOutOfPageAdControlBlock($unit) : $this->getAdControlBlock($unit);
-            }
-
         }
 
         $response->setContent(str_replace(self::PLACEHOLDER, $controlCode, $response->getContent()));
@@ -95,13 +97,43 @@ class ControlCodeListener
     {
         // <script async='async' src='https://www.googletagservices.com/tag/js/gpt.js'></script>
         return <<< CONTROL
-<script async src='//rdc.m32.media/m32hb_gpt.min.js'></script>
+<script type="text/javascript" async="" src="//rdc.m32.media/m32pixel.min.js"></script>
+<script src='//rdc.m32.media/m32hb.min.js'></script>
+<script src="https://static.freeskreen.com/ba/178/freeskreen.min.js"></script>
 <script>
   var googletag = googletag || {};
   googletag.cmd = googletag.cmd || [];
 </script>
-<script> try { window._FskKeyValues = %%PATTERN:TARGETINGMAP%%; } catch(e) {} </script>
-<script src="https://static.freeskreen.com/ba/178/freeskreen.min.js"></script>
+<script>
+googletag.cmd.push(function() {
+  var mapping = googletag.sizeMapping().
+  addSize([0, 0], [320, 50]).
+  addSize([768, 0], [728, 90]).
+  addSize([1024, 0], [[728, 90], [970, 90], [970, 250]]).
+  build();   
+
+  var mapping2 = googletag.sizeMapping().
+  addSize([0, 0], [320, 50]).
+  addSize([768, 0], [728, 90]).
+  build();
+CONTROL;
+    }
+
+    /**
+     * Close the main google dfp control code block.
+     *
+     * This closes our script tags.
+     *
+     * @return string
+     */
+    protected function getCloseMainControlCode()
+    {
+        return <<< CONTROL
+googletag.pubads().enableSingleRequest();
+googletag.pubads().collapseEmptyDivs();
+googletag.enableServices();
+});
+</script>
 CONTROL;
     }
     
@@ -114,46 +146,17 @@ CONTROL;
     {
         $publisherId  = trim($this->settings->getPublisherId(), '/');
         $desktopSizes = $this->printDesktopSizes($unit->getSizes());
-        $mobileSizes  = $this->printMobileSizes($unit->getSizes());
         $divId        = $unit->getDivId();
         $path         = $unit->getPath();
+        $mapping      = $unit->getMapping();
 
         return <<< BLOCK
-<script type="text/javascript">
-googletag.cmd.push(function() {
-      var mapping = googletag.sizeMapping().
-      addSize([0, 0], {$mobileSizes}).
-      addSize([1050, 200], {$desktopSizes}).build();   
-googletag.defineSlot('/{$publisherId}/{$path}', {$desktopSizes}, '{$divId}').defineSizeMapping(mapping).addService(googletag.pubads());
-googletag.pubads().enableSingleRequest();
-googletag.enableServices();
-});
-</script>
+
+googletag.defineSlot('/{$publisherId}/{$path}', {$desktopSizes}, '{$divId}')$mapping.addService(googletag.pubads());
+
 BLOCK;
     }
 
-    /**
-     * Get the control block for an individual ad.
-     *
-     * @return string
-     */
-    protected function getOutOfPageAdControlBlock(AdUnit $unit)
-    {
-        $publisherId = trim($this->settings->getPublisherId(), '/');
-        $divId       = $unit->getDivId();
-        $path        = $unit->getPath();
-
-        return <<< BLOCK
-<script type="text/javascript">
-googletag.cmd.push(function() {
-googletag.defineOutOfPageSlot('/{$publisherId}/{$path}', '{$divId}').addService(googletag.pubads());
-googletag.pubads().enableSingleRequest();
-googletag.enableServices();
-});
-</script>
-BLOCK;
-    }
-    
     /**
      * Print the sizes array in it's json equivalent.
      *
@@ -167,27 +170,6 @@ BLOCK;
         if (count($sizes)) {
             foreach ($sizes as $size) {
                 if (($size[1] != '50') && ($size[1] != '100')) {
-                    $string .= '[' . $size[0] . ', ' . $size[1] . '], ';
-                }
-            }
-        }
-
-        return '['.trim($string, ', ').']';
-    }
-
-    /**
-     * Print the sizes array in it's json equivalent.
-     *
-     * @param array $sizes
-     * @return string
-     */
-    protected function printMobileSizes(array $sizes)
-    {
-        // This function is to check what is the allowed size for the ads. We will only allow mobile friendly ads.
-        $string = '';
-        if (count($sizes)) {
-            foreach ($sizes as $size) {
-                if (($size[0] <= '320') && ($size[1] <= '250')) {
                     $string .= '[' . $size[0] . ', ' . $size[1] . '], ';
                 }
             }
@@ -245,7 +227,7 @@ BLOCK;
             case 'fiche':
                 $targets[] = array('sections' => 'detail');
                 if (isset($params['slug'])) {
-                    $plan = $this->em->getRepository('AppBundle:Plan')->getPlanByPlanUrl($params['slug']);
+                    $plan = $this->em->getRepository('AppBundle:Plan')->getPlanByPlanUrl($params['slug'], $this->requestStack->getCurrentRequest()->getLocale());
                     if ($plan) {
                         // Plan Type.
                         if ($plan->getPlanType()->getId()) {
