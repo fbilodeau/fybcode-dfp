@@ -6,6 +6,8 @@ use Fybcode\DfpBundle\Model\AdUnit;
 use Fybcode\DfpBundle\Model\Settings;
 use Fybcode\DfpBundle\Model\Collection;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class DfpExtension extends \Twig_Extension
 {
@@ -17,11 +19,13 @@ class DfpExtension extends \Twig_Extension
      * @param Fybcode\DfpBundle\Model\Settings $settings
      * @param Fybcode\DfpBundle\Model\Collection $collection
      */
-    public function __construct(RequestStack $requestStack, Settings $settings, Collection $collection)
+    public function __construct(RequestStack $requestStack, Settings $settings, Collection $collection, TokenStorageInterface $tokenStorageInterface, AuthorizationChecker $authorizationChecker)
     {
         $this->requestStack = $requestStack;
         $this->settings   = $settings;
         $this->collection = $collection;
+        $this->tokenStorageInterface = $tokenStorageInterface;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     /**
@@ -33,7 +37,6 @@ class DfpExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFunction('dfp_ad_unit', array($this, 'addAdUnit'), array('is_safe' => array('html'))),
-            new \Twig_SimpleFunction('dfp_oop_ad_unit', array($this, 'addOutOfPageAdUnit'), array('is_safe' => array('html')))
         );
     }
 
@@ -45,22 +48,13 @@ class DfpExtension extends \Twig_Extension
      */
     public function addAdUnit(array $adUnit)
     {
-        $unit = new AdUnit($adUnit['code'], $adUnit['id'], $adUnit['size'], $this->requestStack->getCurrentRequest());
+        // Check if user logged in.
+        $userId = 0;
+        if ($this->authorizationChecker->isGranted('IS_AUTHENTICATED_REMEMBERED') && $this->tokenStorageInterface->getToken()->getUser()) {
+            $userId = $this->tokenStorageInterface->getToken()->getUser()->getId();
+        }
 
-        $this->collection->add($unit);
-        
-        return $unit->output($this->settings);
-    }
-
-    /**
-     * Create an out of page ad unit and return the source
-     *
-     * @param array $adUnit
-     * @return string
-     */
-    public function addOutOfPageAdUnit(array $adUnit)
-    {
-        $unit = new AdUnit($adUnit['code'], $adUnit['id'], null);
+        $unit = new AdUnit($adUnit['code'], $adUnit['id'], $adUnit['size'], $this->requestStack->getCurrentRequest(), $userId, $adUnit['mapping']);
 
         $this->collection->add($unit);
         
