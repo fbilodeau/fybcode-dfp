@@ -54,7 +54,7 @@ class DfpExtension extends \Twig_Extension
             $userId = $this->tokenStorageInterface->getToken()->getUser()->getId();
         }
 
-        $unit = new AdUnit($adUnit['code'], $adUnit['id'], $adUnit['size'], $this->requestStack->getCurrentRequest(), $userId, $adUnit['mapping']);
+        $unit = new AdUnit($adUnit['code'], $adUnit['id'], $adUnit['size'], $this->requestStack->getCurrentRequest(), $userId, $adUnit['madopsPreset'], $adUnit['dfpAdUnitPath'], $adUnit['m32id']);
 
         $this->collection->add($unit);
         
