@@ -17,6 +17,10 @@ class AdUnit
     protected $sizes;
     protected $divId;
     protected $request;
+    protected $userId;
+    protected $madopsPreset;
+    protected $dfpAdUnitPath;
+    protected $m32id;
 
     /**
      * @param string $path
@@ -24,14 +28,17 @@ class AdUnit
      * @param array|null $sizes
      * @param Request $request
      */
-    public function __construct($path, $divId, $sizes=null, Request $request, $userId, $mapping=null)
+    public function __construct($path, $divId, $sizes=null, Request $request, $userId, $madopsPreset, $dfpAdUnitPath, $m32id)
     {
+        // En cas de roll back sur la version de M32, retourner à une vesion précédente au 11 Décembre 2019 sur Git.
         $this->setPath($path);
         $this->setDivId($divId);
-        $this->setSizes($sizes);
+        $this->sizes = $sizes;
         $this->request = $request;
         $this->userId = $userId;
-        $this->setMapping($mapping);
+        $this->setMadopsPreset($madopsPreset);
+        $this->setDfpAdUnitPath($dfpAdUnitPath);
+        $this->setM32id($m32id);
     }
 
     /**
@@ -43,60 +50,22 @@ class AdUnit
     public function output(Settings $settings)
     {
 
+        //if ($this->request->getClientIp() != '173.237.240.50') {
+
             $class = $settings->getDivClass();
-            $output = <<< RETURN
-    <div id="{$this->divId}" class="{$class}">
-    <script type="text/javascript">
-    googletag.cmd.push(function() { googletag.display('{$this->divId}'); });
-    </script>
-    </div>
+            $output = ($this->madopsPreset !== null)
+                        ? <<< RETURN
+    <div data-m32-ad data-options='{"madopsPreset":"{$this->madopsPreset}","dfpId":"{$this->m32id}","dfpAdUnitPath":"{$this->dfpAdUnitPath}"}'></div>
+RETURN
+                        : <<< RETURN
+    <div data-m32-ad data-options='{"sizes":"{$this->sizes}","dfpId":"{$this->m32id}","dfpAdUnitPath":"{$this->dfpAdUnitPath}"}'></div>
 RETURN;
+
+        //}
 
         return $output;
     }
     
-    /**
-     * Fix the given sizes, if possible, so that they will match the internal array needs.
-     *
-     * @throws Fybcode\DfpBundle\Model\AdSizeException
-     * @param array|null$sizes
-     * @return array|null
-     */
-    protected function fixSizes($sizes)
-    {
-        if ($sizes === null) {
-            return;
-        }
-
-        if (count($sizes) == 0) {
-            throw new AdSizeException('The size cannot be an empty array. It should be given as an array with a width and height. ie: array(800,600).');
-        }
-
-        if ($this->checkSize($sizes)) {
-            return array($sizes);
-        }
-
-        foreach ($sizes as $size) {
-            if (!$this->checkSize($size)) {
-                throw new AdSizeException(sprintf('Cannot take the size: %s as a parameter. A size should be an array giving a width and a height. ie: array(800,600).', printf($size, true)));
-            }
-        }
-
-        return $sizes;
-    }
-
-    /**
-     * Check that the given size has is an array with two numeric elements.
-     */
-    protected function checkSize($size)
-    {
-        if (is_array($size) && count($size) == 2 && isset($size[0]) && is_numeric($size[0]) && isset($size[1]) && is_numeric($size[1])) {
-            return true;
-        }
-
-        return false;
-    }
-
     /**
      * Validate the name of the browser, used to not show ads for robots.
      */
@@ -140,7 +109,7 @@ RETURN;
      */
     public function setSizes($sizes)
     {
-        $this->sizes = $this->fixSizes($sizes);
+        $this->sizes = $sizes;
     }
 
     /**
@@ -174,24 +143,63 @@ RETURN;
     }
 
     /**
-     * Get the mapping.
+     * Get the madopsPreset.
      *
-     * @param string $mapping
+     * @param string $madopsPreset
      */
-    public function setMapping($mapping)
+    public function setMadopsPreset($madopsPreset)
     {
-        $this->mapping = ($mapping)
-                            ? ".defineSizeMapping(". $mapping. ")"
-                            : null;
+        $this->madopsPreset = $madopsPreset;
     }
 
     /**
-     * Get the mapping.
+     * Get the madopsPreset.
      *
      * @return string
      */
-    public function getMapping()
+    public function getMadopsPreset()
     {
-        return $this->mapping;
+        return $this->madopsPreset;
     }
+
+    /**
+     * Get the dfpAdUnitPath.
+     *
+     * @param string $dfpAdUnitPath
+     */
+    public function setDfpAdUnitPath($dfpAdUnitPath)
+    {
+        $this->dfpAdUnitPath = $dfpAdUnitPath;
+    }
+
+    /**
+     * Get the dfpAdUnitPath.
+     *
+     * @return string
+     */
+    public function getDfpAdUnitPath()
+    {
+        return $this->dfpAdUnitPath;
+    }
+
+    /**
+     * Get the m32id.
+     *
+     * @param string $m32id
+     */
+    public function setM32id($m32id)
+    {
+        $this->m32id = $m32id;
+    }
+
+    /**
+     * Get the m32id.
+     *
+     * @return string
+     */
+    public function getM32id()
+    {
+        return $this->m32id;
+    }
+
 }
