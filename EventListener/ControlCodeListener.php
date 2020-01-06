@@ -213,20 +213,20 @@ CONTROL;
                                     switch ($planCategory->getPlanCategory()->getId()) {
                                         case '1000009':
                                         case '1000010':
-                                            $dfp_categorie[] = 'duplexTriplex';
+                                            $dfp_value = 'duplexTriplex';
                                             break;
                                         case '1000012':
-                                            $dfp_categorie[] = 'garageApartment';
+                                            $dfp_value = 'garageApartment';
                                             break;
                                         case '1000016':
                                         case '1000019':
-                                            $dfp_categorie[] = 'limitedMobility';
+                                            $dfp_value = 'limitedMobility';
                                             break;
                                         case '1000007':
-                                            $dfp_categorie[] = 'semiDetached';
+                                            $dfp_value = 'semiDetached';
                                             break;
                                         case '1000020':
-                                            $dfp_categorie[] = 'tinyHouse';
+                                            $dfp_value = 'tinyHouse';
                                             break;
                                     }
                                     if ($dfp_value) {
