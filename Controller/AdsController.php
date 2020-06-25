@@ -55,16 +55,6 @@ pubmatic.com, 155967, RESELLER
 openx.com, 537143344, RESELLER
 indexexchange.com, 175407, RESELLER
 openx.com, 537125356, RESELLER
-
-lockerdome.com,11424682666850304,DIRECT
-
-appnexus.com, 3153, RESELLER, f5ab79cb980f11d1
-adtech.com, 11095, Reseller
-connectad.io, 73, DIRECT
-pubmatic.com, 156077, RESELLER, 5d62403b186f2ace
-adform.com, 768, RESELLER
-contextweb.com, 560489, RESELLER, 89ff185a4c4e857c
-
 openx.com, 540471645, DIRECT, 6a698e2ec38604c6
 
 pubmatic.com, 158605, DIRECT, 5d62403b186f2ace
