@@ -79,6 +79,13 @@ districtm.io,100962,RESELLER,3fd707be9c4527c3
 rubiconproject.com,18020,RESELLER,0bfd66d529a55807
 rhythmone.com,1654642120,RESELLER,a670c89d4a324e47
 
+ad-generation.jp,12474,RESELLER
+appnexus.com,3663,RESELLER,f5ab79cb980f11d1
+yahoo.com,55029,RESELLER,e1a5b5b6e3255540
+
+m32.media, 1033, DIRECT
+m32connect.com, 1033, DIRECT
+
 RETURN;
 
         // Dispatch request
