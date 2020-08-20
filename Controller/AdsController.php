@@ -73,6 +73,10 @@ ad-generation.jp,12474,RESELLER
 appnexus.com,3663,RESELLER,f5ab79cb980f11d1
 yahoo.com,55029,RESELLER,e1a5b5b6e3255540
 
+indexexchange.com, 192410, Reseller, 50b1c356f2c5c8fc
+152media.com, 152, DIRECT
+appnexus.com, 3153, RESELLER, f5ab79cb980f11d1
+
 m32.media, 1033, DIRECT
 m32connect.com, 1033, DIRECT
 
