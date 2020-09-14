@@ -80,6 +80,40 @@ appnexus.com, 3153, RESELLER, f5ab79cb980f11d1
 m32.media, 1033, DIRECT
 m32connect.com, 1033, DIRECT
 
+google.com, pub-7026201757273977, RESELLER, f08c47fec0942fa0
+google.com, pub-7353644945201577, RESELLER, f08c47fec0942fa0
+rhythmone.com, 752824437, RESELLER, a670c89d4a324e47
+rhythmone.com, 3526250853, RESELLER, a670c89d4a324e47
+openx.com, 538808047, RESELLER
+openx.com, 538808048, RESELLER
+openx.com, 538808049, RESELLER
+openx.com, 538808050, RESELLER
+openx.com, 540344750, RESELLER, 6a698e2ec38604c6
+indexexchange.com, 184032, RESELLER
+indexexchange.com, 187675, RESELLER
+vdopia.com, 14057, RESELLER
+spotxchange.com,252547,RESELLER,7842df1d2fe2db34
+spotx.tv,252547,RESELLER,7842df1d2fe2db34
+video.unrulymedia.com,752824437,RESELLER
+video.unrulymedia.com,3526250853,RESELLER
+video.unrulymedia.com,3312463993,RESELLER
+sovrn.com, 278802, RESELLER, fafdf38b16bf6b2b
+lijit.com, 278802, RESELLER, fafdf38b16bf6b2b
+lijit.com, 278802-eb, RESELLER, fafdf38b16bf6b2b
+appnexus.com, 1360, RESELLER, f5ab79cb980f11d1
+gumgum.com, 11645, RESELLER, ffdef49475d318a9
+openx.com, 538959099, RESELLER, 6a698e2ec38604c6
+openx.com, 539924617, RESELLER, 6a698e2ec38604c6
+pubmatic.com, 137711, RESELLER, 5d62403b186f2ace
+pubmatic.com, 156212, RESELLER, 5d62403b186f2ace
+pubmatic.com, 156700, RESELLER, 5d62403b186f2ace
+rubiconproject.com, 17960, RESELLER, 0bfd66d529a55807
+triplelift.com, 8637, RESELLER, 6c33edb13117fd86
+triplelift.com, 8637-EB, RESELLER, 6c33edb13117fd86
+pubmatic.com, 159436, RESELLER, 5d62403b186f2ace
+freewheel.tv, 1131121, RESELLER
+freewheel.tv, 1131329, RESELLER
+
 RETURN;
 
         // Dispatch request
