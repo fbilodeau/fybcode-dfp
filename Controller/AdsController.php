@@ -35,7 +35,7 @@ google.com, pub-0037126603126973, DIRECT, f08c47fec0942fa0
 google.com, pub-9685734445476814, DIRECT, f08c47fec0942fa0
 google.com, pub-6283873300935465, DIRECT, f08c47fec0942fa0
 freeskreen.com, 178, DIRECT, fe119a6acfd19070
-tremorhub.com, 030lb-bps80, DIRECT, 1a4e959a1b50034a
+tremorhub.com, 030lb-bps80, RESELLER, 1a4e959a1b50034a
 indexexchange.com, 184088, RESELLER, 50b1c356f2c5c8fc
 quantum-advertising.com, 3247, RESELLER
 quantum-advertising.com, 3159, RESELLER
@@ -113,6 +113,9 @@ triplelift.com, 8637-EB, RESELLER, 6c33edb13117fd86
 pubmatic.com, 159436, RESELLER, 5d62403b186f2ace
 freewheel.tv, 1131121, RESELLER
 freewheel.tv, 1131329, RESELLER
+
+indexexchange.com, 184884, DIRECT, 50b1c356f2c5c8fc
+telaria.com, 030lb-bps80, RESELLER, 1a4e959a1b50034a
 
 RETURN;
 
