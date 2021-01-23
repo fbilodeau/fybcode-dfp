@@ -116,6 +116,7 @@ freewheel.tv, 1131329, RESELLER
 
 indexexchange.com, 184884, DIRECT, 50b1c356f2c5c8fc
 telaria.com, 030lb-bps80, RESELLER, 1a4e959a1b50034a
+yahoo.com, 56566, DIRECT, e1a5b5b6e3255540
 
 RETURN;
 
