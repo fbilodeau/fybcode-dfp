@@ -71,7 +71,7 @@ rhythmone.com,1654642120,RESELLER,a670c89d4a324e47
 rubiconproject.com,18020,RESELLER,0bfd66d529a55807
 smaato.com,1100044650,RESELLER,07bcf65f187117b4
 yahoo.com,55029,RESELLER,e1a5b5b6e3255540
-
+admanmedia.com,726,RESELLER
 
 m32.media, 1033, DIRECT
 m32connect.com, 1033, DIRECT
