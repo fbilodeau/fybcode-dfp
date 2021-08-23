@@ -27,92 +27,83 @@ class AdsController extends Controller
     public function txtAction()
     {
         $txtFile = $output = <<< RETURN
-appnexus.com, 2437, DIRECT, f5ab79cb980f11d1
-
-google.com, pub-1847030151454431, DIRECT, f08c47fec0942fa0
 google.com, pub-6873606674919521, DIRECT, f08c47fec0942fa0
 google.com, pub-0037126603126973, DIRECT, f08c47fec0942fa0
 google.com, pub-9685734445476814, DIRECT, f08c47fec0942fa0
-google.com, pub-6283873300935465, DIRECT, f08c47fec0942fa0
 
-telaria.com, 030lb-bps80, RESELLER, 1a4e959a1b50034a
-tremorhub.com, 030lb-bps80, RESELLER, 1a4e959a1b50034a
-freeskreen.com, 178, DIRECT, fe119a6acfd19070
-advertising.com, 22118, RESELLER
-smartadserver.com, 1772, RESELLER
-indexexchange.com, 184088, RESELLER, 50b1c356f2c5c8fc
-
-districtm.io, 101151, DIRECT, 3fd707be9c4527c3
-appnexus.com, 1908, RESELLER, f5ab79cb980f11d1
-sharethrough.com, aa5dab82, DIRECT, d53b998a7bd4ecd2
-
-adtech.com, 10895, DIRECT
-coxmt.com, 2000067907202, RESELLER
-pubmatic.com, 156078, RESELLER
-pubmatic.com, 156377, RESELLER
-pubmatic.com, 155967, RESELLER
-openx.com, 537143344, RESELLER
-indexexchange.com, 175407, RESELLER
-openx.com, 537125356, RESELLER
-openx.com, 540471645, DIRECT, 6a698e2ec38604c6
-
-pubmatic.com, 158605, DIRECT, 5d62403b186f2ace
-
-
-aps.amazon.com,5958391e-88ea-48ec-8c15-5013f0cdbc6d,DIRECT
-ad-generation.jp,12474,RESELLER,7f4ea9029ac04e53
-appnexus.com,3663,RESELLER,f5ab79cb980f11d1
-districtm.io,100962,RESELLER,3fd707be9c4527c3
-gumgum.com,14141,RESELLER,ffdef49475d318a9
-openx.com,540191398,RESELLER,6a698e2ec38604c6
-pubmatic.com,157150,RESELLER,5d62403b186f2ace
-pubmatic.com,160006,RESELLER,5d62403b186f2ace
-pubmatic.com,160096,RESELLER,5d62403b186f2ace
-rhythmone.com,1654642120,RESELLER,a670c89d4a324e47
-rubiconproject.com,18020,RESELLER,0bfd66d529a55807
-smaato.com,1100044650,RESELLER,07bcf65f187117b4
-yahoo.com,55029,RESELLER,e1a5b5b6e3255540
-admanmedia.com,726,RESELLER
-
-m32.media, 1033, DIRECT
-m32connect.com, 1033, DIRECT
-
-google.com, pub-7026201757273977, RESELLER, f08c47fec0942fa0
-google.com, pub-7353644945201577, RESELLER, f08c47fec0942fa0
-rhythmone.com, 752824437, RESELLER, a670c89d4a324e47
-rhythmone.com, 3526250853, RESELLER, a670c89d4a324e47
-openx.com, 538808047, RESELLER
-openx.com, 538808048, RESELLER
-openx.com, 538808049, RESELLER
-openx.com, 538808050, RESELLER
-openx.com, 540344750, RESELLER, 6a698e2ec38604c6
-indexexchange.com, 184032, RESELLER
-indexexchange.com, 187675, RESELLER
-vdopia.com, 14057, RESELLER
-spotxchange.com,252547,RESELLER,7842df1d2fe2db34
-spotx.tv,252547,RESELLER,7842df1d2fe2db34
-video.unrulymedia.com,752824437,RESELLER
-video.unrulymedia.com,3526250853,RESELLER
-video.unrulymedia.com,3312463993,RESELLER
-sovrn.com, 278802, RESELLER, fafdf38b16bf6b2b
-lijit.com, 278802, RESELLER, fafdf38b16bf6b2b
-lijit.com, 278802-eb, RESELLER, fafdf38b16bf6b2b
-appnexus.com, 1360, RESELLER, f5ab79cb980f11d1
-gumgum.com, 11645, RESELLER, ffdef49475d318a9
-openx.com, 538959099, RESELLER, 6a698e2ec38604c6
-openx.com, 539924617, RESELLER, 6a698e2ec38604c6
-pubmatic.com, 137711, RESELLER, 5d62403b186f2ace
-pubmatic.com, 156212, RESELLER, 5d62403b186f2ace
-pubmatic.com, 156700, RESELLER, 5d62403b186f2ace
-rubiconproject.com, 17960, RESELLER, 0bfd66d529a55807
-triplelift.com, 8637, RESELLER, 6c33edb13117fd86
-triplelift.com, 8637-EB, RESELLER, 6c33edb13117fd86
-pubmatic.com, 159436, RESELLER, 5d62403b186f2ace
-freewheel.tv, 1131121, RESELLER
-freewheel.tv, 1131329, RESELLER
-
-indexexchange.com, 184884, DIRECT, 50b1c356f2c5c8fc
-yahoo.com, 56566, DIRECT, e1a5b5b6e3255540
+adtech.com, 10895, direct
+coxmt.com, 2000067907202, reseller
+pubmatic.com, 156078, reseller
+pubmatic.com, 156377, reseller
+pubmatic.com, 155967, reseller
+openx.com, 537143344, reseller
+indexexchange.com, 175407, reseller
+openx.com, 537125356, reseller
+aol.net, 10895, direct
+aol.com, 54777, direct, e1a5b5b6e3255540
+yahoo.com, 54777, direct, e1a5b5b6e3255540
+indexexchange.com, 184884, direct, 50b1c356f2c5c8fc
+aps.amazon.com, 5958391e-88ea-48ec-8c15-5013f0cdbc6d, direct
+admanmedia.com, 726, reseller
+sharethrough.com, 7144eb80, reseller
+yieldmo.com, 2719019867620450718, reseller
+smaato.com, 1100044650, reseller, 07bcf65f187117b4
+rubiconproject.com, 18020, reseller, 0bfd66d529a55807
+emxdgt.com, 2009, reseller, 1e1d41537f7cad7f
+districtm.io, 100962, reseller, 3fd707be9c4527c3
+pubmatic.com, 157150, reseller, 5d62403b186f2ace
+pubmatic.com, 160096, reseller, 5d62403b186f2ace
+pubmatic.com, 160006, reseller, 5d62403b186f2ace
+openx.com, 540191398, reseller, 6a698e2ec38604c6
+ad-generation.jp, 12474, reseller, 7f4ea9029ac04e53
+contextweb.com, 562541, reseller, 89ff185a4c4e857c
+rhythmone.com, 1654642120, reseller, a670c89d4a324e47
+yahoo.com, 55029, reseller, e1a5b5b6e3255540
+appnexus.com, 3663, reseller, f5ab79cb980f11d1
+appnexus.com, 1908, reseller, f5ab79cb980f11d1
+appnexus.com, 1356, reseller, f5ab79cb980f11d1
+gumgum.com, 14141, reseller, ffdef49475d318a9
+rubiconproject.com, 23292, direct, 0bfd66d529a55807
+yahoo.com, 56566, direct, e1a5b5b6e3255540
+appnexus.com, 2437, direct, f5ab79cb980f11d1
+districtm.io, 101151, direct, 3fd707be9c4527c3
+smartadserver.com, 1772, reseller
+advertising.com, 22118, reseller
+tremorhub.com, 030lb-bps80, reseller, 1a4e959a1b50034a
+telaria.com, 030lb-bps80, reseller, 1a4e959a1b50034a
+indexexchange.com, 184088, reseller, 50b1c356f2c5c8fc
+freeskreen.com, 178, direct, fe119a6acfd19070
+google.com, pub-1847030151454431, reseller, f08c47fec0942fa0
+advertising.com, 28612, direct
+aol.com, 55212, direct, e1a5b5b6e3255540
+yahoo.com, 55212, direct, e1a5b5b6e3255540
+rubiconproject.com, 23294, reseller, 0bfd66d529a55807
+smartadserver.com, 3353, direct
+pubmatic.com, 156439, reseller
+pubmatic.com, 154037, reseller
+smartadserver.com, 4071, direct
+adyoulike.com, b4bf4fdd9b0b915f746f6747ff432bde, reseller
+axonix.com, 57264, reseller
+admanmedia.com, 43, reseller
+smaato.com, 1100044045, reseller, 07bcf65f187117b4
+rubiconproject.com, 16114, reseller, 0bfd66d529a55807
+verve.com, 15503, reseller, 0c8f5958fc2d6270
+openx.com, 537149888, reseller, 6a698e2ec38604c6
+loopme.com, 5679, reseller, 6c8d5f95897a5a3b
+xad.com, 958, reseller, 81cbf0a75a5e0e9a
+contextweb.com, 560288, reseller, 89ff185a4c4e857c
+rhythmone.com, 2564526802, reseller, a670c89d4a324e47
+pubnative.net, 1006576, reseller, d641df8625486a7b
+appnexus.com, 3703, reseller, f5ab79cb980f11d1
+sharethrough.com, ozkPECkT, direct, d53b998a7bd4ecd2
+m32connect.com, 1033, direct
+m32.media, 1033, direct
+openx.com, 540471645, direct, 6a698e2ec38604c6
+pubmatic.com, 158605, direct, 5d62403b186f2ace
+152media.com, 152, direct
+appnexus.com, 3153, reseller, f5ab79cb980f11d1
+lockerdome.com, 11424682666850300, direct
+sharethrough.com, aa5dab82, direct, d53b998a7bd4ecd2
 
 RETURN;
 
