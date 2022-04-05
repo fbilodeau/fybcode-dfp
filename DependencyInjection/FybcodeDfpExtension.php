@@ -30,7 +30,7 @@ class FybcodeDfpExtension extends Extension
         $processor     = new Processor();
         $configuration = new Configuration();
 
-        $config = $processor->process($configuration->getConfigTree(), $configs);
+        $config = $processor->processConfiguration($configuration, $configs);
         $loader->load('services.xml');
         
         $this->setConfig($config, $container);
@@ -64,6 +64,6 @@ class FybcodeDfpExtension extends Extension
      */
     public function getNamespace()
     {
-        return 'http://www.fybcode.com';
+        return 'https://www.fybcode.com';
     }
 }

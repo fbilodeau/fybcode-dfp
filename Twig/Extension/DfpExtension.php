@@ -8,8 +8,11 @@ use Fybcode\DfpBundle\Model\Collection;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class DfpExtension extends \Twig_Extension
+class DfpExtension extends AbstractExtension
 {
     protected $settings;
     protected $collection;
@@ -19,7 +22,7 @@ class DfpExtension extends \Twig_Extension
      * @param Fybcode\DfpBundle\Model\Settings $settings
      * @param Fybcode\DfpBundle\Model\Collection $collection
      */
-    public function __construct(RequestStack $requestStack, Settings $settings, Collection $collection, TokenStorageInterface $tokenStorageInterface, AuthorizationChecker $authorizationChecker)
+    public function __construct(RequestStack $requestStack, Settings $settings, Collection $collection, TokenStorageInterface $tokenStorageInterface, AuthorizationCheckerInterface $authorizationChecker)
     {
         $this->requestStack = $requestStack;
         $this->settings   = $settings;
@@ -35,9 +38,9 @@ class DfpExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('dfp_ad_unit', array($this, 'addAdUnit'), array('is_safe' => array('html'))),
-        );
+        return [
+            new TwigFunction('dfp_ad_unit', array($this, 'addAdUnit'), array('is_safe' => array('html'))),
+        ];
     }
 
     /**

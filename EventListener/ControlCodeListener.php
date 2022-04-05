@@ -2,12 +2,13 @@
 
 namespace Fybcode\DfpBundle\EventListener;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Fybcode\DfpBundle\Model\Collection;
 use Fybcode\DfpBundle\Model\Settings;
 use Fybcode\DfpBundle\Model\AdUnit;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Doctrine\ORM\EntityManager;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 /**
  * @package     FybcodeDfpBundle
@@ -51,7 +52,7 @@ class ControlCodeListener
      * @param Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param Doctrine\ORM\EntityManager $em
      */
-    public function __construct(Collection $collection, Settings $settings, RequestStack $requestStack, EntityManager $em)
+    public function __construct(Collection $collection, Settings $settings, RequestStack $requestStack, EntityManagerInterface $em)
     {
         $this->settings   = $settings;
         $this->collection = $collection;
@@ -63,9 +64,9 @@ class ControlCodeListener
      * Switch out the Control Code placeholder for the Google DFP control code html,
      * based upon the included ads.
      *
-     * @param Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
+     * @param ResponseEvent $event
      */
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(ResponseEvent $event)
     {
         $response = $event->getResponse();
 
@@ -111,7 +112,7 @@ CONTROL;
 CONTROL;
     }
     
-    /* Todo: Frank: Cette fonction devrait normalement être dans mon fichier AppBundle, car c'est du code qui est spécifique à mon application principale. Ainsi, il faudrait garder
+    /* Todo: Frank: Cette fonction devrait normalement être dans mon fichier App, car c'est du code qui est spécifique à mon application principale. Ainsi, il faudrait garder
     probablement la fonction ici, et pouvoir être capable de l'appeler, soit via une requête twig ou un paramètre. Pour le moment, je laisse le tout ici, mais ce sera à réfléchir
     à l'avenir. */
     /**
@@ -139,7 +140,7 @@ CONTROL;
             case 'collection-single':
                 $targets[] = array('sections' => 'recherche');
                 if (isset($params['slugFr'])) {
-                    $planCollection = $this->em->getRepository('AppBundle:PlanCollection')->findOneBy(array('slugFr' => $params['slugFr']));
+                    $planCollection = $this->em->getRepository('App:PlanCollection')->findOneBy(array('slugFr' => $params['slugFr']));
                     if ($planCollection) {
                         $id = $planCollection->getId();
                         // Collections with garages
@@ -161,7 +162,7 @@ CONTROL;
             case 'fiche':
                 $targets[] = array('sections' => 'detail');
                 if (isset($params['slug'])) {
-                    $plan = $this->em->getRepository('AppBundle:Plan')->getPlanByPlanUrl($params['slug'], $this->requestStack->getCurrentRequest()->getLocale());
+                    $plan = $this->em->getRepository('App:Plan')->getPlanByPlanUrl($params['slug'], $this->requestStack->getCurrentRequest()->getLocale());
                     if ($plan) {
                         // Plan Type.
                         if ($plan->getPlanType()->getId()) {
@@ -272,7 +273,7 @@ CONTROL;
             case 'fiche-point':
                 $targets[] = array('sections' => 'agence');
                 if (isset($params['slug'])) {
-                    $webTtAddress = $this->em->getRepository('AppBundle:WebTtAddress')->findOneBy(array('slug' => $params['slug']));
+                    $webTtAddress = $this->em->getRepository('App:WebTtAddress')->findOneBy(array('slug' => $params['slug']));
                     if ($webTtAddress) {
                         switch ($webTtAddress->getId()) {
                             case '2850':

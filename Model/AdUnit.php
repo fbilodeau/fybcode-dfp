@@ -49,19 +49,14 @@ class AdUnit
      */
     public function output(Settings $settings)
     {
-
-        //if ($this->request->getClientIp() != '173.237.240.50') {
-
-            $class = $settings->getDivClass();
-            $output = ($this->madopsPreset !== null)
+        $class = $settings->getDivClass();
+        $output = ($this->madopsPreset !== null)
                         ? <<< RETURN
     <div data-m32-ad data-options='{"madopsPreset":"{$this->madopsPreset}","dfpId":"{$this->m32id}","dfpAdUnitPath":"{$this->dfpAdUnitPath}"}'></div>
 RETURN
                         : <<< RETURN
     <div data-m32-ad data-options='{"sizes":"{$this->sizes}","dfpId":"{$this->m32id}","dfpAdUnitPath":"{$this->dfpAdUnitPath}"}'></div>
 RETURN;
-
-        //}
 
         return $output;
     }
