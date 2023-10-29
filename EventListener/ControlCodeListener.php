@@ -93,7 +93,7 @@ class ControlCodeListener
         return <<< CONTROL
 <script type="text/javascript" async="" src="//rdc.m32.media/m32pixel.min.js"></script>
 <script src="//rdc.m32.media/madops.min.js"></script>
-<script src="https://static.freeskreen.com/ba/178/freeskreen.min.js"></script>
+<script src="https://s3.us-west-2.amazonaws.com/application-mia-player-prod.rubiconproject.com/pub.js" data-publisher-id="66188"></script>
 CONTROL;
     }
 
