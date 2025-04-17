@@ -69,16 +69,18 @@ class ControlCodeListener
     {
         $response = $event->getResponse();
 
-        $controlCode = '';
-        if (count($this->collection) > 0) {
-            // Set pub headers.
-            $controlCode .= $this->getMainControlCode();
-
-            // Set targeting.
-            $controlCode .= $this->setTargeting($this->requestStack->getCurrentRequest()->get('_route'), $this->requestStack->getCurrentRequest()->get('_route_params'));
+        if(!$response instanceof BinaryFileResponse ) {
+            $controlCode = '';
+            if (count($this->collection) > 0) {
+                // Set pub headers.
+                $controlCode .= $this->getMainControlCode();
+    
+                // Set targeting.
+                $controlCode .= $this->setTargeting($this->requestStack->getCurrentRequest()->get('_route'), $this->requestStack->getCurrentRequest()->get('_route_params'));
+            }
+    
+            $response->setContent(str_replace(self::PLACEHOLDER, $controlCode, $response->getContent()));
         }
-
-        $response->setContent(str_replace(self::PLACEHOLDER, $controlCode, $response->getContent()));
     }
 
     /**
