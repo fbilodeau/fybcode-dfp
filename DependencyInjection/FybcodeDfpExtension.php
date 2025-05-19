@@ -64,6 +64,6 @@ class FybcodeDfpExtension extends Extension
      */
     public function getNamespace()
     {
-        return 'http://www.fybcode.com';
+        return 'https://www.fybcode.com';
     }
 }
