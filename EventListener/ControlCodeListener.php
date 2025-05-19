@@ -2,12 +2,13 @@
 
 namespace Fybcode\DfpBundle\EventListener;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Fybcode\DfpBundle\Model\Collection;
 use Fybcode\DfpBundle\Model\Settings;
 use Fybcode\DfpBundle\Model\AdUnit;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Doctrine\ORM\EntityManager;
+use Symfony\Component\HttpKernel\ResponseEvent;
 
 /**
  * @package     FybcodeDfpBundle
@@ -63,7 +64,7 @@ class ControlCodeListener
      * Switch out the Control Code placeholder for the Google DFP control code html,
      * based upon the included ads.
      *
-     * @param Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
+     * @param ResponseEvent $event
      */
     public function onKernelResponse(FilterResponseEvent $event)
     {
