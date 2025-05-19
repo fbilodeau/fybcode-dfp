@@ -30,7 +30,7 @@ class FybcodeDfpExtension extends Extension
         $processor     = new Processor();
         $configuration = new Configuration();
 
-        $config = $processor->process($configuration->getConfigTree(), $configs);
+        $config = $processor->processConfiguration($configuration, $configs);
         $loader->load('services.xml');
         
         $this->setConfig($config, $container);
