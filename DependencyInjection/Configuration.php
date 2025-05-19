@@ -2,6 +2,7 @@
 
 namespace Fybcode\DfpBundle\DependencyInjection;
 
+use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 /**
@@ -11,7 +12,7 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
  * @author      Francis Bilodeau <fbilodeau@dessinsdrummond.com>
  * @copyright   (c) 2017 Francis Bilodeau
  */
-class Configuration
+class Configuration implements ConfigurationInterface
 {
     /**
      * {@inheritDoc}
