@@ -17,10 +17,15 @@ class Configuration implements ConfigurationInterface
     /**
      * {@inheritDoc}
      */
-    public function getConfigTree()
+    public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('fybcode_dfp', 'array');
+        $builder = new TreeBuilder('fybcode_dfp');
+        if (\method_exists($builder, 'getRootNode')) {
+            $rootNode = $builder->getRootNode();
+        } else {
+            // BC layer for symfony/config 4.1 and older
+            $rootNode = $builder->root('fybcode_dfp', 'array');
+        }
 
         $rootNode
             ->children()
@@ -29,7 +34,7 @@ class Configuration implements ConfigurationInterface
             ->end()
         ;
 
-        return $treeBuilder->buildTree();
+        return $builder;
     }
 }
 
