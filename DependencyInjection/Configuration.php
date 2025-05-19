@@ -37,4 +37,3 @@ class Configuration implements ConfigurationInterface
         return $builder;
     }
 }
-
