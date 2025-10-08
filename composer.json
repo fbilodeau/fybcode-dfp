@@ -2,24 +2,24 @@
 {
     "name": "fybcode/dfp-bundle",
     "type": "symfony-bundle",
-    "description": "Symfony3 Bundle for integrating with the Google DFP Ad Network.",
-    "keywords": ["dfp", "advertising", "google"],
-    "homepage": "http://www.fybcode.com",
+    "description": "Symfony 7 Bundle for integrating with the M32 Ad Network.",
+    "keywords": ["m32", "advertising"],
+    "homepage": "https://www.kranf.com",
     "license": "MIT",
     "authors": [
         {
             "name": "Francis Bilodeau",
-            "email": "francis.bilodeau@fybcode.com",
-            "homepage": "http://www.fybcode.com",
+            "email": "fbilodeau@kranf.com",
+            "homepage": "https://www.kranf.com",
             "role": "Developer"
         }
     ],
     "require-dev": {
-        "symfony/console": "5.3.*"
+        "symfony/console": "7.3.*"
     },
     "require": {
-        "nikic/php-parser": "4.12.*",
-        "twig/extra-bundle": "^2.12|^3.0"
+        "nikic/php-parser": "5.6.1.*",
+        "twig/extra-bundle": "^2.12|^3.21"
     },
     "autoload": {
         "psr-4": { "Fybcode\\DfpBundle\\": "" }
