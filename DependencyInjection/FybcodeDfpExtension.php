@@ -32,7 +32,7 @@ class FybcodeDfpExtension extends Extension
 
         $config = $processor->processConfiguration($configuration, $configs);
         $loader->load('services.xml');
-        
+
         $this->setConfig($config, $container);
     }
 
@@ -64,6 +64,6 @@ class FybcodeDfpExtension extends Extension
      */
     public function getNamespace()
     {
-        return 'https://www.fybcode.com';
+        return 'https://www.kranf.com';
     }
 }
