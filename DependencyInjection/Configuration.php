@@ -17,16 +17,10 @@ class Configuration implements ConfigurationInterface
     /**
      * {@inheritDoc}
      */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $builder = new TreeBuilder('fybcode_dfp');
-        if (\method_exists($builder, 'getRootNode')) {
-            $rootNode = $builder->getRootNode();
-        } else {
-            // BC layer for symfony/config 4.1 and older
-            $rootNode = $builder->root('fybcode_dfp', 'array');
-        }
-
+        $rootNode = $builder->getRootNode();
         $rootNode
             ->children()
                 ->scalarNode('publisher_id')->isRequired()->cannotBeEmpty()->end()
