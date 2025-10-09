@@ -12,7 +12,7 @@ use Countable, IteratorAggregate, ArrayAccess, Closure, ArrayIterator;
  * A Collection resembles the nature of a regular PHP array. That is,
  * it is essentially an <b>ordered map</b> that can also be used
  * like a list.
- * 
+ *
  * A Collection has an internal iterator just like a PHP array. In addition,
  * a Collection can be iterated with external iterators, which is preferrable.
  * To use an external iterator simply use the foreach language construct to
@@ -55,7 +55,7 @@ class Collection implements Countable, IteratorAggregate, ArrayAccess
      *
      * @return array The PHP array representation of this collection.
      */
-    public function toArray()
+    public function toArray(): array
     {
         return $this->collection;
     }
@@ -66,7 +66,7 @@ class Collection implements Countable, IteratorAggregate, ArrayAccess
      *
      * @return mixed
      */
-    public function first()
+       public function first(): mixed
     {
         return reset($this->collection);
     }
@@ -77,7 +77,7 @@ class Collection implements Countable, IteratorAggregate, ArrayAccess
      *
      * @return mixed
      */
-    public function last()
+    public function last(): mixed
     {
         return end($this->collection);
     }
@@ -87,27 +87,27 @@ class Collection implements Countable, IteratorAggregate, ArrayAccess
      *
      * @return mixed
      */
-    public function key()
+    public function key(): mixed
     {
         return key($this->collection);
     }
-    
+
     /**
      * Moves the internal iterator position to the next element.
      *
      * @return mixed
      */
-    public function next()
+    public function next(): mixed
     {
         return next($this->collection);
     }
-    
+
     /**
      * Gets the element of the collection at the current internal iterator position.
      *
      * @return mixed
      */
-    public function current()
+    public function current(): mixed
     {
         return current($this->collection);
     }
@@ -118,12 +118,12 @@ class Collection implements Countable, IteratorAggregate, ArrayAccess
      * @param mixed $key
      * @return mixed The removed element or NULL, if no element exists for the given key.
      */
-    public function remove($key)
+    public function remove($key): ?int
     {
         if (isset($this->collection[$key])) {
             $removed = $this->collection[$key];
             unset($this->collection[$key]);
-            
+
             return $removed;
         }
 
@@ -136,16 +136,16 @@ class Collection implements Countable, IteratorAggregate, ArrayAccess
      * @param mixed $element The element to remove.
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeElement($element)
+     public function removeElement($element): bool
     {
         $key = array_search($element, $this->collection, true);
-        
+
         if ($key !== false) {
             unset($this->collection[$key]);
-            
+
             return true;
         }
-        
+
         return false;
     }
 
@@ -154,7 +154,7 @@ class Collection implements Countable, IteratorAggregate, ArrayAccess
      *
      * @see containsKey()
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return $this->containsKey($offset);
     }
@@ -164,7 +164,7 @@ class Collection implements Countable, IteratorAggregate, ArrayAccess
      *
      * @see get()
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): array
     {
         return $this->get($offset);
     }
@@ -175,7 +175,8 @@ class Collection implements Countable, IteratorAggregate, ArrayAccess
      * @see add()
      * @see set()
      */
-    public function offsetSet($offset, $value)
+    #[\ReturnTypeWillChange]
+    public function offsetSet($offset, $value): array
     {
         if ( ! isset($offset)) {
             return $this->add($value);
@@ -188,7 +189,8 @@ class Collection implements Countable, IteratorAggregate, ArrayAccess
      *
      * @see remove()
      */
-    public function offsetUnset($offset)
+    #[\ReturnTypeWillChange]
+    public function offsetUnset($offset): mixed
     {
         return $this->remove($offset);
     }
@@ -199,7 +201,7 @@ class Collection implements Countable, IteratorAggregate, ArrayAccess
      * @param mixed $key The key to check for.
      * @return boolean TRUE if the given key/index exists, FALSE otherwise.
      */
-    public function containsKey($key)
+     public function containsKey($key): bool
     {
         return isset($this->collection[$key]);
     }
@@ -214,7 +216,7 @@ class Collection implements Countable, IteratorAggregate, ArrayAccess
      * @return boolean TRUE if the given element is contained in the collection,
      *          FALSE otherwise.
      */
-    public function contains($element)
+     public function contains($element): bool
     {
         return in_array($element, $this->collection, true);
     }
@@ -225,7 +227,7 @@ class Collection implements Countable, IteratorAggregate, ArrayAccess
      * @param Closure $p The predicate.
      * @return boolean TRUE if the predicate is TRUE for at least one element, FALSE otherwise.
      */
-    public function exists(Closure $p)
+    public function exists(Closure $p): bool
     {
         foreach ($this->collection as $key => $element) {
             if ($p($key, $element)) {
@@ -244,7 +246,7 @@ class Collection implements Countable, IteratorAggregate, ArrayAccess
      * @param mixed $element The element to search for.
      * @return mixed The key/index of the element or FALSE if the element was not found.
      */
-    public function indexOf($element)
+    public function indexOf($element): bool|int
     {
         return array_search($element, $this->collection, true);
     }
@@ -255,7 +257,7 @@ class Collection implements Countable, IteratorAggregate, ArrayAccess
      * @param mixed $key The key.
      * @return mixed The element or NULL, if no element exists for the given key.
      */
-    public function get($key)
+    public function get($key): ?string
     {
         if (isset($this->collection[$key])) {
             return $this->collection[$key];
@@ -268,7 +270,7 @@ class Collection implements Countable, IteratorAggregate, ArrayAccess
      *
      * @return array
      */
-    public function getKeys()
+    public function getKeys(): ?array
     {
         return array_keys($this->collection);
     }
@@ -278,7 +280,7 @@ class Collection implements Countable, IteratorAggregate, ArrayAccess
      *
      * @return array
      */
-    public function getValues()
+    public function getValues(): ?array
     {
         return array_values($this->collection);
     }
@@ -290,7 +292,7 @@ class Collection implements Countable, IteratorAggregate, ArrayAccess
      *
      * @return integer The number of elements in the collection.
      */
-    public function count()
+    public function count(): int
     {
         return count($this->collection);
     }
@@ -304,7 +306,7 @@ class Collection implements Countable, IteratorAggregate, ArrayAccess
      * @param mixed $key
      * @param mixed $value
      */
-    public function set($key, $value)
+    public function set($key, $value): array
     {
         $this->collection[$key] = $value;
     }
@@ -315,7 +317,7 @@ class Collection implements Countable, IteratorAggregate, ArrayAccess
      * @param mixed $value
      * @return boolean Always TRUE.
      */
-    public function add($value)
+    public function add($value): bool
     {
         $this->collection[] = $value;
         return true;
@@ -323,12 +325,12 @@ class Collection implements Countable, IteratorAggregate, ArrayAccess
 
     /**
      * Checks whether the collection is empty.
-     * 
+     *
      * Note: This is preferrable over count() == 0.
      *
      * @return boolean TRUE if the collection is empty, FALSE otherwise.
      */
-    public function isEmpty()
+    public function isEmpty(): bool
     {
         return ! $this->collection;
     }
@@ -338,7 +340,7 @@ class Collection implements Countable, IteratorAggregate, ArrayAccess
      *
      * @return ArrayIterator
      */
-    public function getIterator()
+    public function getIterator(): ArrayIterator
     {
         return new ArrayIterator($this->collection);
     }
@@ -350,7 +352,7 @@ class Collection implements Countable, IteratorAggregate, ArrayAccess
      * @param Closure $func
      * @return Collection
      */
-    public function map(Closure $func)
+    public function map(Closure $func): ?array
     {
         return new static(array_map($func, $this->collection));
     }
@@ -362,7 +364,7 @@ class Collection implements Countable, IteratorAggregate, ArrayAccess
      * @param Closure $p The predicate used for filtering.
      * @return Collection A collection with the results of the filter operation.
      */
-    public function filter(Closure $p)
+    public function filter(Closure $p): ?array
     {
         return new static(array_filter($this->collection, $p));
     }
@@ -374,14 +376,14 @@ class Collection implements Countable, IteratorAggregate, ArrayAccess
      * @param Closure $p The predicate.
      * @return boolean TRUE, if the predicate yields TRUE for all elements, FALSE otherwise.
      */
-    public function forAll(Closure $p)
+    public function forAll(Closure $p): bool
     {
         foreach ($this->collection as $key => $element) {
             if ( ! $p($key, $element)) {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -394,7 +396,7 @@ class Collection implements Countable, IteratorAggregate, ArrayAccess
      *               of elements where the predicate returned TRUE, the second element
      *               contains the collection of elements where the predicate returned FALSE.
      */
-    public function partition(Closure $p)
+    public function partition(Closure $p): ?array
     {
         $coll1 = $coll2 = array();
         foreach ($this->collection as $key => $element) {
@@ -412,7 +414,7 @@ class Collection implements Countable, IteratorAggregate, ArrayAccess
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return __CLASS__ . '@' . spl_object_hash($this);
     }
@@ -436,7 +438,7 @@ class Collection implements Countable, IteratorAggregate, ArrayAccess
      * @param int $length
      * @return array
      */
-    public function slice($offset, $length = null)
+    public function slice($offset, $length = null): ?array
     {
         return array_slice($this->collection, $offset, $length, true);
     }
