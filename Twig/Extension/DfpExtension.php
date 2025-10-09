@@ -14,8 +14,11 @@ use Twig\TwigFunction;
 
 class DfpExtension extends AbstractExtension
 {
-    protected $settings;
-    protected $collection;
+    protected RequestStack $requestStack;
+    protected Settings $settings;
+    protected Collection $collection;
+    protected TokenStorageInterface $tokenStorageInterface;
+    protected AuthorizationCheckerInterface $authorizationChecker;
 
     /**
      * @param Symfony\Component\HttpFoundation\RequestStack $requestStack
@@ -36,7 +39,7 @@ class DfpExtension extends AbstractExtension
      *
      * @return array
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('dfp_ad_unit', array($this, 'addAdUnit'), array('is_safe' => array('html'))),
@@ -49,7 +52,7 @@ class DfpExtension extends AbstractExtension
      * @param array $adUnit
      * @return string
      */
-    public function addAdUnit(array $adUnit)
+    public function addAdUnit(array $adUnit): string
     {
         // Check if user logged in.
         $userId = 0;
@@ -60,14 +63,14 @@ class DfpExtension extends AbstractExtension
         $unit = new AdUnit($adUnit['code'], $adUnit['id'], $adUnit['size'], $this->requestStack->getCurrentRequest(), $userId, $adUnit['madopsPreset'], $adUnit['dfpAdUnitPath'], $adUnit['m32id']);
 
         $this->collection->add($unit);
-        
+
         return $unit->output($this->settings);
     }
 
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'fybcode_dfp';
     }
