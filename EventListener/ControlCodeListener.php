@@ -10,6 +10,9 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
+use App\Entity\Plan;
+use App\Entity\PlanCollection;
+use App\Entity\WebTtAddress;
 
 /**
  * @package     FybcodeDfpBundle
@@ -115,7 +118,7 @@ CONTROL;
 </script>
 CONTROL;
     }
-    
+
     /* Todo: Frank: Cette fonction devrait normalement être dans mon fichier App, car c'est du code qui est spécifique à mon application principale. Ainsi, il faudrait garder
     probablement la fonction ici, et pouvoir être capable de l'appeler, soit via une requête twig ou un paramètre. Pour le moment, je laisse le tout ici, mais ce sera à réfléchir
     à l'avenir. */
@@ -144,7 +147,7 @@ CONTROL;
             case 'collection-single':
                 $targets[] = array('sections' => 'recherche');
                 if (isset($params['slugFr'])) {
-                    $planCollection = $this->em->getRepository('App:PlanCollection')->findOneBy(array('slugFr' => $params['slugFr']));
+                    $planCollection = $this->em->getRepository(PlanCollection::class)->findOneBy(array('slugFr' => $params['slugFr']));
                     if ($planCollection) {
                         $id = $planCollection->getId();
                         // Collections with garages
@@ -166,7 +169,7 @@ CONTROL;
             case 'fiche':
                 $targets[] = array('sections' => 'detail');
                 if (isset($params['slug'])) {
-                    $plan = $this->em->getRepository('App:Plan')->getPlanByPlanUrl($params['slug'], $this->requestStack->getCurrentRequest()->getLocale());
+                    $plan = $this->em->getRepository(Plan::class)->getPlanByPlanUrl($params['slug'], $this->requestStack->getCurrentRequest()->getLocale());
                     if ($plan) {
                         // Plan Type.
                         if ($plan->getPlanType()->getId()) {
@@ -277,7 +280,7 @@ CONTROL;
             case 'fiche-point':
                 $targets[] = array('sections' => 'agence');
                 if (isset($params['slug'])) {
-                    $webTtAddress = $this->em->getRepository('App:WebTtAddress')->findOneBy(array('slug' => $params['slug']));
+                    $webTtAddress = $this->em->getRepository(WebTtAddress::class)->findOneBy(array('slug' => $params['slug']));
                     if ($webTtAddress) {
                         switch ($webTtAddress->getId()) {
                             case '2850':
