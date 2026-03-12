@@ -1,0 +1,39 @@
+parameters:
+    fybcode.dfp.publisher_id: null
+    fybcode.dfp.div_class: null
+    fybcode.dfp.control.listener.class: Fybcode\DfpBundle\EventListener\ControlCodeListener
+    fybcode.dfp.collection.class: Fybcode\DfpBundle\Model\Collection
+    fybcode.dfp.settings.class: Fybcode\DfpBundle\Model\Settings
+    fybcode.dfp.twig.extension.class: Fybcode\DfpBundle\Twig\Extension\DfpExtension
+
+services:
+
+    fybcode.dfp.collection:
+        class: '%fybcode.dfp.collection.class%'
+
+    fybcode.dfp.settings:
+        class: '%fybcode.dfp.settings.class%'
+        arguments:
+            - '%fybcode.dfp.publisher_id%'
+            - '%fybcode.dfp.div_class%'
+
+    fybcode.dfp.control.listener:
+        class: '%fybcode.dfp.control.listener.class%'
+        arguments:
+            - '@fybcode.dfp.collection'
+            - '@fybcode.dfp.settings'
+            - '@request_stack'
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+
+    fybcode.dfp.twig.extension:
+        class: '%fybcode.dfp.twig.extension.class%'
+        arguments:
+            - '@request_stack'
+            - '@fybcode.dfp.settings'
+            - '@fybcode.dfp.collection'
+            - '@security.token_storage'
+            - '@security.authorization_checker'
+        tags:
+            - { name: twig.extension }
