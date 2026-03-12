@@ -81,7 +81,7 @@ class ControlCodeListener
                 $controlCode .= $this->getMainControlCode();
 
                 // Set targeting.
-                $controlCode .= $this->setTargeting($this->requestStack->getCurrentRequest()->get('_route'), $this->requestStack->getCurrentRequest()->get('_route_params'));
+                $controlCode .= $this->setTargeting($this->requestStack->getCurrentRequest()->attributes->get('_route'), $this->requestStack->getCurrentRequest()->attributes->get('_route_params'));
             }
 
             $response->setContent(str_replace(self::PLACEHOLDER, $controlCode, $response->getContent()));
